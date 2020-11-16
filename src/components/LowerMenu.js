@@ -8,21 +8,21 @@ const LowerMenu = ({ navigation }) => {
                 <TouchableHighlight
                     onPress={() => navigation.navigate('profile')}
                 >
-                    <Image source={require('../assets/images/touch.png')} style={{ width: 40, height: 40 }} />
+                    <Image source={require('../assets/images/profile.png')} style={{ width: 40, height: 40 }} />
                 </TouchableHighlight>
             </View>
             <View style={styles.iconContainer}>
                 <TouchableHighlight
                     onPress={() => navigation.navigate('guidedMeditationSelect')}
                 >
-                    <Image source={require('../assets/images/touch.png')} style={{ width: 40, height: 40 }} />
+                    <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                 </TouchableHighlight>
             </View>
             <View style={styles.iconContainer}>
                 <TouchableHighlight
-                    onPress={() => navigation.navigate('welcomeScreen')}
+                    onPress={() => navigation.navigate('freeMeditation')}
                 >
-                    <Image source={require('../assets/images/touch.png')} style={{ width: 40, height: 40 }} />
+                    <Image source={require('../assets/images/timer.png')} style={{ width: 40, height: 40 }} />
                 </TouchableHighlight>
             </View>
         </View>
