@@ -5,6 +5,7 @@ import welcomeScreen from './src/views/welcomeScreen';
 import guidedMeditationSelect from './src/views/guidedMeditationSelect';
 import profile from './src/views/profile';
 import freeMeditation from './src/views/freeMeditation';
+import guidedMeditation from './src/views/guidedMeditation';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ function App() {
                 <Stack.Screen name="guidedMeditationSelect" component={guidedMeditationSelect} options={{ headerShown: false }}/>
                 <Stack.Screen name="profile" component={profile} options={{ headerShown: false }}/>
                 <Stack.Screen name="freeMeditation" component={freeMeditation} options={{ headerShown: false }}/>
+                <Stack.Screen name="guidedMeditation" component={guidedMeditation} options={{ headerShown: false }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
