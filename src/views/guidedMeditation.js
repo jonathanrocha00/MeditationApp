@@ -5,7 +5,8 @@ import { Audio } from 'expo-av';
 
 const guidedMeditation = ({ navigation }) => {
 
-	const meditationAudio = new Audio.Sound();
+	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
+	let isPlaying = false;
 
 	React.useEffect(() => {
 		try {
@@ -18,6 +19,25 @@ const guidedMeditation = ({ navigation }) => {
 			meditationAudio.unloadAsync();
 		};
 	});
+
+	const RenderPlayPauseButton = () => {
+		return (
+			<TouchableHighlight
+				style={styles.playPauseButton}
+				onPress={() => {
+					if (isPlaying) {
+						meditationAudio.pauseAsync();
+						isPlaying = false;
+					} else {
+						meditationAudio.playAsync();
+						isPlaying = true;
+					}
+				}}
+			>
+				<Image source={require('../assets/images/playPause.png')} style={{ width: 70, height: 70 }} />
+			</TouchableHighlight>
+		);
+	}
 
 	return (
 		<View style={styles.container}>
@@ -42,25 +62,23 @@ const guidedMeditation = ({ navigation }) => {
 				<TouchableHighlight
 					onPress={async () => {
 						let audioState = await meditationAudio.getStatusAsync();
-						console.log(audioState);
 						await meditationAudio.setPositionAsync(audioState.positionMillis - 15000);
 					}}
 				>
-					<Image source={require('../assets/images/back15seconds.png')} style={{ width: 40, height: 40 }} />
+					<Image source={require('../assets/images/back15seconds.png')} style={{ width: 50, height: 50 }} />
 				</TouchableHighlight>
 
-				<TouchableHighlight
-					onPress={async () => await meditationAudio.playAsync()}
-				>
-					<Image source={require('../assets/images/play.png')} style={{ width: 80, height: 80 }} />
-				</TouchableHighlight>
+				<RenderPlayPauseButton />
 
 				<TouchableHighlight
-					onPress={async () => await meditationAudio.stopAsync()}
+					onPress={async () => {
+						await meditationAudio.stopAsync();
+						isPlaying = false;
+					}}
 				>
-					<Image source={require('../assets/images/stop.png')} style={{ width: 40, height: 40 }} />
+					<Image source={require('../assets/images/stop.png')} style={{ width: 60, height: 60 }} />
 				</TouchableHighlight>
-				
+
 			</View>
 		</View >
 	);
@@ -95,6 +113,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	playPauseButton: {
+		marginRight: 50,
+		marginLeft: 50
 	}
 });
 
