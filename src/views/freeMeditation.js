@@ -8,9 +8,6 @@ const freeMeditation = ({ navigation }) => {
             <View style={styles.home}>
                 <Text> Free Meditation </Text>
             </View>
-            <LowerMenu 
-                navigation={navigation}
-            />
         </View>
     );
 }
