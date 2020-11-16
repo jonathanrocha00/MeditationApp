@@ -25,7 +25,7 @@ const welcomeScreen = ({ navigation }) => {
 
             <Button
                 title="Relaxar"
-                onPress={() => navigation.navigate('Details')}
+                onPress={() => navigation.navigate('guidedMeditationSelect')}
             />
         </View>
     );
