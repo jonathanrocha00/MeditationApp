@@ -79,6 +79,15 @@ const guidedMeditation = ({ navigation }) => {
 					<Image source={require('../assets/images/stop.png')} style={{ width: 60, height: 60 }} />
 				</TouchableHighlight>
 
+				<TouchableHighlight
+					style={styles.backButton}
+					onPress={async () => {
+						navigation.navigate('guidedMeditationSelect')
+					}}
+				>
+					<Image source={require('../assets/images/back.png')} style={{ width: 30, height: 30 }} />
+				</TouchableHighlight>
+
 			</View>
 		</View >
 	);
@@ -117,6 +126,11 @@ const styles = StyleSheet.create({
 	playPauseButton: {
 		marginRight: 50,
 		marginLeft: 50
+	},
+	backButton: {
+		position: 'absolute',
+		right: 20,
+		bottom: 20,
 	}
 });
 
