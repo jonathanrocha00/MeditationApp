@@ -3,17 +3,13 @@ import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 
-const guidedMeditation = ({ navigation }) => {
+const guidedMeditation = ({ route, navigation }) => {
 
 	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
 	let isPlaying = false;
 
 	React.useEffect(() => {
-		try {
-			meditationAudio.loadAsync(require('../assets/music/1997.mp3'));
-		} catch (error) {
-			// Forgive me Roberta 
-		}
+		meditationAudio.loadAsync(require('../assets/music/1997.mp3'));
 
 		return () => {
 			meditationAudio.unloadAsync();
@@ -53,10 +49,10 @@ const guidedMeditation = ({ navigation }) => {
 			/>
 			<View style={styles.titleContainer}>
 				<Image source={require('../assets/images/meditation.png')} style={{ width: 80, height: 80 }} />
-				<Text style={styles.title}> Título </Text>
+				<Text style={styles.title}> {route.params.title} </Text>
 			</View>
 			<View style={styles.timerContainer}>
-				<Text style={styles.timer}> 89:88 </Text>
+				<Text style={styles.timer}> 88:88 </Text>
 			</View>
 			<View style={styles.controlsContainer}>
 				<TouchableHighlight
