@@ -63,7 +63,7 @@ const Timer = ({ navigation }) => {
                 <Text
                     style = {styles.question}
                 >
-                    Por quanto tempo você deseja meditar6?
+                    Meditar por:
                 </Text>
                 <TouchableHighlight
                     style={styles.setTimerButton}
@@ -86,7 +86,6 @@ const Timer = ({ navigation }) => {
                         setIsTimerSet(true);
                         setMinutes(14);
                         setSeconds(59);
-                        meditationAudio.playAsync();
                     }}
                 >
                     <Text
@@ -102,7 +101,6 @@ const Timer = ({ navigation }) => {
                         setIsTimerSet(true);
                         setMinutes(29);
                         setSeconds(59);
-                        meditationAudio.playAsync();
                     }}
                 >
                     <Text
@@ -132,8 +130,8 @@ const styles = StyleSheet.create({
 	},
 	question: {
 		color: 'white',
-		fontSize: 19,
-		marginBottom: 15
+		fontSize: 16,
+		marginBottom: 7
 	},
 	timerContainer: {
 		flex: 2,
