@@ -7,25 +7,51 @@ const guidedMeditation = ({ route, navigation }) => {
 
 	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
 	let isPlaying = false;
+	let timerMinutes = '00';
+	let timerSeconds = '00';
+	let interval = null;
 
 	React.useEffect(() => {
 		meditationAudio.loadAsync(require('../assets/music/1997.mp3'));
 
 		return () => {
 			meditationAudio.unloadAsync();
+			clearInterval(interval);
 		};
 	});
+
+	React.useEffect(() => {
+		console.log('timerSeconds', timerSeconds);
+	}, [timerSeconds]);
+
+	const timerLoop = () => {
+		interval = setTimeout(async () => {
+			meditationAudio.getStatusAsync().then(status => {
+				console.log(status.positionMillis);
+				timerSeconds = status.positionMillis;
+			});
+
+			// timerMinutes = Math.floor(status.positionMillis / 60000);
+			// console.log('timerMinutes', timerMinutes);
+
+			// setTimerSeconds(status.positionMillis);
+			// console.log('status.positionMillis', status.positionMillis);
+
+			timerLoop();
+		}, 1000);
+	}
 
 	const RenderPlayPauseButton = () => {
 		return (
 			<TouchableHighlight
 				style={styles.playPauseButton}
-				onPress={() => {
+				onPress={async () => {
+					timerLoop();
 					if (isPlaying) {
-						meditationAudio.pauseAsync();
+						await meditationAudio.pauseAsync();
 						isPlaying = false;
 					} else {
-						meditationAudio.playAsync();
+						await meditationAudio.playAsync();
 						isPlaying = true;
 					}
 				}}
@@ -52,7 +78,7 @@ const guidedMeditation = ({ route, navigation }) => {
 				<Text style={styles.title}> {route.params.title} </Text>
 			</View>
 			<View style={styles.timerContainer}>
-				<Text style={styles.timer}> 88:88 </Text>
+			<Text style={styles.timer}> {timerMinutes}:{timerSeconds} </Text>
 			</View>
 			<View style={styles.controlsContainer}>
 				<TouchableHighlight
