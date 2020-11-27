@@ -6,29 +6,36 @@ import Timer from '../components/Timer';
 
 const freeMeditation = ({ route, navigation }) => {
 
-	const [isPlaying, setIsPlaying] = React.useState(true);
 	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
-	
+
+	const motivationalPhrases = [
+		'Respire, feche os olhos e relaxe...',
+		'Você está num lugar seguro...',
+		'Foque na sua respiração...',
+		'Ouça os barulhos ao seu redor...',
+		'Observe seus pensamentos...',
+		'Desligue cada parte do seu corpo...',
+		'Deixe seu corpo afundar...',
+		'Não esvazie a mente, apenas a observe...',
+		'A ansiedade é parte natural do processo...',
+		'A vida às vezes é uma merda!',
+		'Tudo bem entrar em desespero às vezes...',
+		'Deixe os pensamentos virem e passarem...',
+		'Procure onde você perdeu sua calma...',
+		'Sua salvação está em você',
+		'Converse consigo mesma',
+		'Seja sua melhor amiga',
+	];
+
 	React.useEffect(() => {
-		// meditationAudio.loadAsync(require('../assets/music/1997.mp3')).then(() => {
-		// 	meditationAudio.playAsync();
-		// });
-		
+		meditationAudio.loadAsync(require('../assets/music/1997.mp3')).then(() => {
+			meditationAudio.playAsync();
+		});
+
 		return () => {
 			meditationAudio.unloadAsync();
 		};
 	});
-
-	const play = async (audio) => {
-		console.log('Playing...');
-		await audio.playAsync();
-		setIsPlaying(true);
-	}
-
-	const pause = async (audio) => {
-		await audio.pauseAsync();
-		setIsPlaying(true);
-	}
 
 	return (
 		<View style={styles.container}>
@@ -43,28 +50,19 @@ const freeMeditation = ({ route, navigation }) => {
 				}}
 			/>
 			<View style={styles.titleContainer}>
-				<Text style={styles.quote}> 'Respire, feche os olhos e relaxe...' </Text>
+				<Text style={styles.quote}>
+					{motivationalPhrases[Math.floor(Math.random() * motivationalPhrases.length)]}
+				</Text>
 			</View>
 
-			<Timer/>
+			<Timer />
 
 			<View style={styles.controlsContainer}>
 				<TouchableHighlight
 					onPress={async () => {
-						let audioState = await meditationAudio.getStatusAsync();
-						await meditationAudio.setPositionAsync(audioState.positionMillis - 15000);
-					}}
-				>
-					<Image source={require('../assets/images/moon.png')} style={{ width: 70, height: 70 }} />
-				</TouchableHighlight>
-
-				<TouchableHighlight
-					onPress={async () => {
-						if (isPlaying) {
-							await pause(meditationAudio);
-						} else {
-							await play(meditationAudio);
-						}
+						meditationAudio.getStatusAsync().then(status => {
+							meditationAudio.setIsMutedAsync(!status.isMuted);
+						});
 					}}
 				>
 					<Image source={require('../assets/images/sound.png')} style={{ width: 35, height: 35 }} />
