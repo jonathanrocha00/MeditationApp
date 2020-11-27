@@ -2,123 +2,32 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
+import Timer from '../components/Timer';
 
 const freeMeditation = ({ route, navigation }) => {
 
-	// const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
-	const [isPlaying, setIsPlaying] = React.useState(false);
-	const [isTimerSet, setIsTimerSet] = React.useState(false);
-	const [minutes, setMinutes] = React.useState(0);
-	const [seconds, setSeconds] = React.useState(5);
-
-	const tickTimer = () => {
-		console.log('ticking time...');
-		if (isTimerSet) {
-			if (minutes == 0 && seconds == 0) {
-				setIsTimerSet(false);
-			} else if (minutes != 0 && seconds == 0) {
-				setMinutes(minutes - 1);
-				setSeconds(59);
-			} else {
-				setSeconds(seconds - 1);
-			}
-		}
-	}
-
-	const pad = (num, size) => {
-		var s = "000000000" + num;
-		return s.substr(s.length - size);
-	}
-
+	const [isPlaying, setIsPlaying] = React.useState(true);
+	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
+	
 	React.useEffect(() => {
-		const timer = setTimeout(() => {
-			console.log('running loop...');
-			tickTimer();
-		}, 1000);
+		// meditationAudio.loadAsync(require('../assets/music/1997.mp3')).then(() => {
+		// 	meditationAudio.playAsync();
+		// });
+		
 		return () => {
-			clearTimeout(timer);
+			meditationAudio.unloadAsync();
 		};
-	}, [seconds]);
+	});
 
-	const RenderTimerContainer = () => {
-		if (isTimerSet) {
-			return (
-				<View style={styles.timerContainer} >
-					<Text
-						style={styles.timer}
-					>
-						{minutes}:{pad(seconds, 2)}
-					</Text>
+	const play = async (audio) => {
+		console.log('Playing...');
+		await audio.playAsync();
+		setIsPlaying(true);
+	}
 
-					<TouchableHighlight
-						style={styles.setTimerButton}
-						onPress={() => {
-							setIsTimerSet(false);
-						}}
-					>
-						<Text
-							style={styles.setTimerButtonText}
-						>
-							Parar
-						</Text>
-					</TouchableHighlight>
-				</View>
-			);
-		} else {
-			return (
-				<View style={styles.timerContainer} >
-					<Text
-						style = {styles.question}
-					>
-						Por quanto tempo você deseja meditar?
-					</Text>
-					<TouchableHighlight
-						style={styles.setTimerButton}
-						onPress={() => {
-							setIsTimerSet(true);
-							setMinutes(4);
-							setSeconds(59);
-						}}
-					>
-						<Text
-							style={styles.setTimerButtonText}
-						>
-							5 minutos
-						</Text>
-					</TouchableHighlight>
-
-					<TouchableHighlight
-						style={styles.setTimerButton}
-						onPress={() => {
-							setIsTimerSet(true);
-							setMinutes(14);
-							setSeconds(59);
-						}}
-					>
-						<Text
-							style={styles.setTimerButtonText}
-						>
-							15 minutos
-						</Text>
-					</TouchableHighlight>
-
-					<TouchableHighlight
-						style={styles.setTimerButton}
-						onPress={() => {
-							setIsTimerSet(true);
-							setMinutes(29);
-							setSeconds(59);
-						}}
-					>
-						<Text
-							style={styles.setTimerButtonText}
-						>
-							30 minutos
-						</Text>
-					</TouchableHighlight>
-				</View>
-			);
-		}
+	const pause = async (audio) => {
+		await audio.pauseAsync();
+		setIsPlaying(true);
 	}
 
 	return (
@@ -137,7 +46,7 @@ const freeMeditation = ({ route, navigation }) => {
 				<Text style={styles.quote}> 'Respire, feche os olhos e relaxe...' </Text>
 			</View>
 
-			<RenderTimerContainer />
+			<Timer/>
 
 			<View style={styles.controlsContainer}>
 				<TouchableHighlight
@@ -151,8 +60,11 @@ const freeMeditation = ({ route, navigation }) => {
 
 				<TouchableHighlight
 					onPress={async () => {
-						await meditationAudio.pauseAsync();
-						isPlaying = false;
+						if (isPlaying) {
+							await pause(meditationAudio);
+						} else {
+							await play(meditationAudio);
+						}
 					}}
 				>
 					<Image source={require('../assets/images/sound.png')} style={{ width: 35, height: 35 }} />
