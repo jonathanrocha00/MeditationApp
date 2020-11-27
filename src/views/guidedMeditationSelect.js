@@ -5,11 +5,26 @@ import LowerMenu from '../components/LowerMenu';
 const guidedMeditationSelect = ({ navigation }) => {
 
     const audios = [
-        {title: '1997'},
-        {title: 'La La Land'},
-        {title: 'Bla bla'},
-        {title: 'Me mata por favor'},
-        {title: 'Nunca te pedi nada'},
+        {
+            title: '1997',
+            archive: require('../assets/music/1997.mp3')
+        },
+        {
+            title: 'La La Land',
+            archive: require('../assets/music/Land.mp3')
+        },
+        {
+            title: 'Bla bla',
+            archive: '../assets/music/1997.mp3'
+        },
+        {
+            title: 'Me mata por favor',
+            archive: '../assets/music/1997.mp3'
+        },
+        {
+            title: 'Nunca te pedi nada',
+            archive: '../assets/music/1997.mp3'
+        },
     ];
 
     return (
@@ -18,7 +33,7 @@ const guidedMeditationSelect = ({ navigation }) => {
                 <View style={[styles.meditationContainerBig, styles.blue5]}>
                     <View style={styles.meditationIconContainerBig}>
                         <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[0].title })}
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[0].title, archive: audios[0].archive })}
                         >
                             <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                         </TouchableHighlight>
@@ -28,7 +43,7 @@ const guidedMeditationSelect = ({ navigation }) => {
                 <View style={[styles.meditationContainer, styles.blue4]}>
                     <View style={styles.meditationIconContainer}>
                         <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[1].title })}
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[1].title, archive: audios[1].archive })}
                         >
                             <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                         </TouchableHighlight>
@@ -38,7 +53,7 @@ const guidedMeditationSelect = ({ navigation }) => {
                 <View style={[styles.meditationContainer, styles.blue3]}>
                     <View style={styles.meditationIconContainer}>
                         <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[2].title })}
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[2].title, archive: audios[2].archive })}
                         >
                             <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                         </TouchableHighlight>
@@ -48,7 +63,7 @@ const guidedMeditationSelect = ({ navigation }) => {
                 <View style={[styles.meditationContainer, styles.blue2]}>
                     <View style={styles.meditationIconContainer}>
                         <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[3].title })}
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[3].title, archive: audios[3].archive })}
                         >
                             <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                         </TouchableHighlight>
@@ -58,7 +73,7 @@ const guidedMeditationSelect = ({ navigation }) => {
                 <View style={[styles.meditationContainer, styles.blue1]}>
                     <View style={styles.meditationIconContainer}>
                         <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[4].title })}
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[4].title, archive: audios[4].archive })}
                         >
                             <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                         </TouchableHighlight>

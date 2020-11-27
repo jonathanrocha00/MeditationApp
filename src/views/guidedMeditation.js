@@ -12,41 +12,18 @@ const guidedMeditation = ({ route, navigation }) => {
 	let interval = null;
 
 	React.useEffect(() => {
-		meditationAudio.loadAsync(require('../assets/music/1997.mp3'));
+		meditationAudio.loadAsync(route.params.archive);
 
 		return () => {
 			meditationAudio.unloadAsync();
-			clearInterval(interval);
 		};
 	});
-
-	React.useEffect(() => {
-		console.log('timerSeconds', timerSeconds);
-	}, [timerSeconds]);
-
-	const timerLoop = () => {
-		interval = setTimeout(async () => {
-			meditationAudio.getStatusAsync().then(status => {
-				console.log(status.positionMillis);
-				timerSeconds = status.positionMillis;
-			});
-
-			// timerMinutes = Math.floor(status.positionMillis / 60000);
-			// console.log('timerMinutes', timerMinutes);
-
-			// setTimerSeconds(status.positionMillis);
-			// console.log('status.positionMillis', status.positionMillis);
-
-			timerLoop();
-		}, 1000);
-	}
 
 	const RenderPlayPauseButton = () => {
 		return (
 			<TouchableHighlight
 				style={styles.playPauseButton}
 				onPress={async () => {
-					timerLoop();
 					if (isPlaying) {
 						await meditationAudio.pauseAsync();
 						isPlaying = false;
