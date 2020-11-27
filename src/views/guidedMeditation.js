@@ -2,14 +2,12 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
+import AudioTimer from '../components/AudioTimer';
 
 const guidedMeditation = ({ route, navigation }) => {
 
 	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
 	let isPlaying = false;
-	let timerMinutes = '00';
-	let timerSeconds = '00';
-	let interval = null;
 
 	React.useEffect(() => {
 		meditationAudio.loadAsync(route.params.archive);
@@ -55,7 +53,9 @@ const guidedMeditation = ({ route, navigation }) => {
 				<Text style={styles.title}> {route.params.title} </Text>
 			</View>
 			<View style={styles.timerContainer}>
-			<Text style={styles.timer}> {timerMinutes}:{timerSeconds} </Text>
+				<AudioTimer 
+					isPlaying={isPlaying}
+				/>
 			</View>
 			<View style={styles.controlsContainer}>
 				<TouchableHighlight
