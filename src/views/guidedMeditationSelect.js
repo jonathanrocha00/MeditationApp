@@ -7,7 +7,8 @@ const guidedMeditationSelect = ({ navigation }) => {
     const audios = [
         {
             title: '1997',
-            archive: require('../assets/music/1997.mp3')
+            archive: require('../assets/music/1997.mp3'),
+            duration: 190793
         },
         {
             title: 'La La Land',
@@ -33,7 +34,7 @@ const guidedMeditationSelect = ({ navigation }) => {
                 <View style={[styles.meditationContainerBig, styles.blue5]}>
                     <View style={styles.meditationIconContainerBig}>
                         <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[0].title, archive: audios[0].archive })}
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[0].title, archive: audios[0].archive, duration: audios[0].duration })}
                         >
                             <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
                         </TouchableHighlight>

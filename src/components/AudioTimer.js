@@ -3,19 +3,21 @@ import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native'
 
 const AudioTimer = (props) => {
 
-    const [isPlaying, setIsPlaying] = React.useState(false);
-    const [minutes, setMinutes] = React.useState(5);
-    const [seconds, setSeconds] = React.useState(10);
+    const [minutes, setMinutes] = React.useState(1);
+    const [seconds, setSeconds] = React.useState(1);
+    const [ticker, setTicker] = React.useState(false);
+
+    console.log(props.isPlaying);
 
     React.useEffect(() => {
-        setIsPlaying(props.isPlaying);
-        console.log(props.isPlaying);
-    },[props.isPlaying]);
+        setMinutes(Math.floor(props.duration / 60000));
+        setSeconds(Math.floor((props.duration % 60000) / 1000));
+	}, [props.duration]);
 
     const tickTimer = () => {
-        if (isPlaying) {
+        if (props.isPlaying){
             if (minutes == 0 && seconds == 0) {
-                setIsTimerSet(false);
+                props.stopPlayingCallback();
             } else if (minutes != 0 && seconds == 0) {
                 setMinutes(minutes - 1);
                 setSeconds(59);
@@ -23,11 +25,8 @@ const AudioTimer = (props) => {
                 setSeconds(seconds - 1);
             }
         }
-    }
 
-    const pad = (num, size) => {
-        var s = "000000000" + num;
-        return s.substr(s.length - size);
+        setTicker(!ticker);
     }
 
     React.useEffect(() => {
@@ -37,7 +36,12 @@ const AudioTimer = (props) => {
         return () => {
             clearTimeout(timer);
         };
-    }, [seconds]);
+    }, [ticker]);
+
+    const pad = (num, size) => {
+        var s = "000000000" + num;
+        return s.substr(s.length - size);
+    }
 
     return (
         <View style={styles.timerContainer} >

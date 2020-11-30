@@ -4,18 +4,41 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import AudioTimer from '../components/AudioTimer';
 
-const guidedMeditation = ({ route, navigation }) => {
+const meditationAudio = new Audio.Sound();
 
-	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
-	let isPlaying = false;
+const guidedMeditation = ({ route, navigation }) => {
+	const [isPlaying, setIsPlaying] = React.useState(false);
+	let isLoaded = false;
 
 	React.useEffect(() => {
-		meditationAudio.loadAsync(route.params.archive);
-
 		return () => {
 			meditationAudio.unloadAsync();
 		};
 	});
+
+	React.useEffect(() => {
+		console.log('isPlaying');
+		if (isPlaying) {
+			if (isLoaded) {
+				meditationAudio.playAsync();
+			} else {
+				meditationAudio.loadAsync(route.params.archive).then((status) => {
+					console.log(status);
+					meditationAudio.playAsync();
+					isLoaded = true;
+				});
+			}
+		} else {
+			if (isLoaded) {
+				meditationAudio.pauseAsync();
+			} else {
+				meditationAudio.loadAsync(route.params.archive).then(() => {
+					meditationAudio.pauseAsync();
+					isLoaded = true;
+				});
+			}
+		}
+	}, [isPlaying]);
 
 	const RenderPlayPauseButton = () => {
 		return (
@@ -23,11 +46,9 @@ const guidedMeditation = ({ route, navigation }) => {
 				style={styles.playPauseButton}
 				onPress={async () => {
 					if (isPlaying) {
-						await meditationAudio.pauseAsync();
-						isPlaying = false;
+						setIsPlaying(false);
 					} else {
-						await meditationAudio.playAsync();
-						isPlaying = true;
+						setIsPlaying(true);
 					}
 				}}
 			>
@@ -55,6 +76,8 @@ const guidedMeditation = ({ route, navigation }) => {
 			<View style={styles.timerContainer}>
 				<AudioTimer 
 					isPlaying={isPlaying}
+					duration={route.params.duration}
+					stopPlayingCallback={() => {setIsPlaying(false)}}
 				/>
 			</View>
 			<View style={styles.controlsContainer}>
@@ -69,14 +92,13 @@ const guidedMeditation = ({ route, navigation }) => {
 
 				<RenderPlayPauseButton />
 
-				<TouchableHighlight
+				{/* <TouchableHighlight
 					onPress={async () => {
 						await meditationAudio.stopAsync();
-						isPlaying = false;
 					}}
 				>
 					<Image source={require('../assets/images/stop.png')} style={{ width: 60, height: 60 }} />
-				</TouchableHighlight>
+				</TouchableHighlight> */}
 
 				<TouchableHighlight
 					style={styles.backButton}
