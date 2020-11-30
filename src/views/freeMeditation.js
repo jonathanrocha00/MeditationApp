@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import Timer from '../components/Timer';
 
-const freeMeditation = ({ route, navigation }) => {
+const freeMeditation = ({ navigation }) => {
 
 	const [meditationAudio, setMeditationAudio] = React.useState(new Audio.Sound());
 
