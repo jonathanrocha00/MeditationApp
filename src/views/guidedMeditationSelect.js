@@ -8,79 +8,73 @@ const guidedMeditationSelect = ({ navigation }) => {
         {
             title: '1997',
             archive: require('../assets/music/1997.mp3'),
-            duration: 190793
+            duration: 190793,
+            icon: require('../assets/images/lotus.png'),
+            iconSize: 80,
+            container: [styles.meditationContainerBig, styles.blue5],
+            iconContainer: styles.meditationIconContainerBig
         },
         {
             title: 'La La Land',
-            archive: require('../assets/music/Land.mp3')
+            archive: require('../assets/music/Land.mp3'),
+            duration: 198629,
+            icon: require('../assets/images/enlightenment.png'),
+            iconSize: 40,
+            container: [styles.meditationContainer, styles.blue4],
+            iconContainer: styles.meditationIconContainer
         },
         {
-            title: 'Bla bla',
-            archive: '../assets/music/1997.mp3'
+            title: '1997',
+            archive: '../assets/music/1997.mp3',
+            duration: 190793,
+            icon: require('../assets/images/meditate.png'),
+            iconSize: 40,
+            container: [styles.meditationContainer, styles.blue3],
+            iconContainer: styles.meditationIconContainer
         },
         {
-            title: 'Me mata por favor',
-            archive: '../assets/music/1997.mp3'
+            title: '1997',
+            archive: '../assets/music/1997.mp3',
+            duration: 190793,
+            icon: require('../assets/images/head.png'),
+            iconSize: 43,
+            container: [styles.meditationContainer, styles.blue2],
+            iconContainer: styles.meditationIconContainer
         },
         {
-            title: 'Nunca te pedi nada',
-            archive: '../assets/music/1997.mp3'
-        },
+            title: '1997',
+            archive: '../assets/music/1997.mp3',
+            duration: 190793,
+            icon: require('../assets/images/smile.png'),
+            iconSize: 35,
+            container: [styles.meditationContainer, styles.blue1],
+            iconContainer: styles.meditationIconContainer
+        }
     ];
+
+    const renderRegularMeditations = () => {
+        return (
+            <>
+                {audios.map(audio =>
+                    <View style={audio.container}>
+                        <TouchableHighlight
+                            onPress={() => navigation.navigate('guidedMeditation', { title: audio.title, archive: audio.archive, duration: audio.duration, icon: audio.icon })}
+                        >
+                            <View style={audio.iconContainer}>
+
+                                <Image source={audio.icon} style={{ width: audio.iconSize, height: audio.iconSize }} />
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                )}
+            </>
+        )
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.body}>
-                <View style={[styles.meditationContainerBig, styles.blue5]}>
-                    <View style={styles.meditationIconContainerBig}>
-                        <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[0].title, archive: audios[0].archive, duration: audios[0].duration })}
-                        >
-                            <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
-                        </TouchableHighlight>
-                    </View>
-                    <Text> {audios[0].title} </Text>
-                </View>
-                <View style={[styles.meditationContainer, styles.blue4]}>
-                    <View style={styles.meditationIconContainer}>
-                        <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[1].title, archive: audios[1].archive })}
-                        >
-                            <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
-                        </TouchableHighlight>
-                    </View>
-                    <Text> {audios[1].title} </Text>
-                </View>
-                <View style={[styles.meditationContainer, styles.blue3]}>
-                    <View style={styles.meditationIconContainer}>
-                        <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[2].title, archive: audios[2].archive })}
-                        >
-                            <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
-                        </TouchableHighlight>
-                    </View>
-                    <Text> {audios[2].title} </Text>
-                </View>
-                <View style={[styles.meditationContainer, styles.blue2]}>
-                    <View style={styles.meditationIconContainer}>
-                        <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[3].title, archive: audios[3].archive })}
-                        >
-                            <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
-                        </TouchableHighlight>
-                    </View>
-                    <Text> {audios[3].title} </Text>
-                </View>
-                <View style={[styles.meditationContainer, styles.blue1]}>
-                    <View style={styles.meditationIconContainer}>
-                        <TouchableHighlight
-                            onPress={() => navigation.navigate('guidedMeditation', { title: audios[4].title, archive: audios[4].archive })}
-                        >
-                            <Image source={require('../assets/images/meditation.png')} style={{ width: 40, height: 40 }} />
-                        </TouchableHighlight>
-                    </View>
-                    <Text> {audios[4].title} </Text>
-                </View>
+                {renderRegularMeditations()}
             </View>
             <LowerMenu
                 navigation={navigation}
@@ -111,9 +105,8 @@ const styles = StyleSheet.create({
     },
     meditationContainer: {
         flex: 1,
-        backgroundColor: 'red',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     meditationContainerBig: {
         flex: 3,

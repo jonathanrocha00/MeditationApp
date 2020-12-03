@@ -65,7 +65,7 @@ const freeMeditation = ({ navigation }) => {
 						});
 					}}
 				>
-					<Image source={require('../assets/images/sound.png')} style={{ width: 35, height: 35 }} />
+					<Image source={require('../assets/images/sound.png')} style={{tintColor: 'white', width: 35, height: 35 }} />
 				</TouchableHighlight>
 
 				<TouchableHighlight
@@ -74,7 +74,7 @@ const freeMeditation = ({ navigation }) => {
 						navigation.navigate('guidedMeditationSelect')
 					}}
 				>
-					<Image source={require('../assets/images/back.png')} style={{ width: 30, height: 30 }} />
+					<Image source={require('../assets/images/back.png')} style={{tintColor: 'white', width: 30, height: 30 }} />
 				</TouchableHighlight>
 
 			</View>

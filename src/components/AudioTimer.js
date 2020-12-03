@@ -7,8 +7,6 @@ const AudioTimer = (props) => {
     const [seconds, setSeconds] = React.useState(1);
     const [ticker, setTicker] = React.useState(false);
 
-    console.log(props.isPlaying);
-
     React.useEffect(() => {
         setMinutes(Math.floor(props.duration / 60000));
         setSeconds(Math.floor((props.duration % 60000) / 1000));

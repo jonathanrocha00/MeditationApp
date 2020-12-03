@@ -17,13 +17,11 @@ const guidedMeditation = ({ route, navigation }) => {
 	});
 
 	React.useEffect(() => {
-		console.log('isPlaying');
 		if (isPlaying) {
 			if (isLoaded) {
 				meditationAudio.playAsync();
 			} else {
 				meditationAudio.loadAsync(route.params.archive).then((status) => {
-					console.log(status);
 					meditationAudio.playAsync();
 					isLoaded = true;
 				});
@@ -52,7 +50,7 @@ const guidedMeditation = ({ route, navigation }) => {
 					}
 				}}
 			>
-				<Image source={require('../assets/images/playPause.png')} style={{ width: 70, height: 70 }} />
+				<Image source={require('../assets/images/playPause.png')} style={{tintColor: 'white', width: 120, height: 120 }} />
 			</TouchableHighlight>
 		);
 	}
@@ -70,7 +68,7 @@ const guidedMeditation = ({ route, navigation }) => {
 				}}
 			/>
 			<View style={styles.titleContainer}>
-				<Image source={require('../assets/images/meditation.png')} style={{ width: 80, height: 80 }} />
+				<Image source={route.params.icon} style={{tintColor: 'white', width: 100, height: 100 }} />
 				<Text style={styles.title}> {route.params.title} </Text>
 			</View>
 			<View style={styles.timerContainer}>
@@ -81,24 +79,7 @@ const guidedMeditation = ({ route, navigation }) => {
 				/>
 			</View>
 			<View style={styles.controlsContainer}>
-				<TouchableHighlight
-					onPress={async () => {
-						let audioState = await meditationAudio.getStatusAsync();
-						await meditationAudio.setPositionAsync(audioState.positionMillis - 15000);
-					}}
-				>
-					<Image source={require('../assets/images/back15seconds.png')} style={{ width: 50, height: 50 }} />
-				</TouchableHighlight>
-
 				<RenderPlayPauseButton />
-
-				{/* <TouchableHighlight
-					onPress={async () => {
-						await meditationAudio.stopAsync();
-					}}
-				>
-					<Image source={require('../assets/images/stop.png')} style={{ width: 60, height: 60 }} />
-				</TouchableHighlight> */}
 
 				<TouchableHighlight
 					style={styles.backButton}
@@ -106,7 +87,7 @@ const guidedMeditation = ({ route, navigation }) => {
 						navigation.navigate('guidedMeditationSelect')
 					}}
 				>
-					<Image source={require('../assets/images/back.png')} style={{ width: 30, height: 30 }} />
+					<Image source={require('../assets/images/back.png')} style={{tintColor: 'white', width: 30, height: 30 }} />
 				</TouchableHighlight>
 
 			</View>
@@ -145,8 +126,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	playPauseButton: {
-		marginRight: 50,
-		marginLeft: 50
+		marginLeft: 20,
+		marginRight: 20
 	},
 	backButton: {
 		position: 'absolute',
